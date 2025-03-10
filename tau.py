@@ -2,6 +2,7 @@
 import enum
 import re
 import os
+import math
 import discord
 
 # Specific Module Imports
@@ -49,6 +50,16 @@ class Trig_Type(enum.Enum):
 def exec_arith(arith_type, msg):
     parts = re.split(r"[\s,]+", msg)
     return_var = 0
+    
+    #Replace Constants
+    for i, part in enumerate(parts):
+        if part.lower() == "tau":
+            parts[i] = math.tau
+        elif part.lower() == "pi":
+            parts[i] = math.pi
+        elif part.lower() == "e":
+            parts[i] = math.e
+
 
     #Try-Catch for Syntax Errors  
     try:
@@ -89,6 +100,16 @@ def exec_arith(arith_type, msg):
 def exec_trig(trig_type, msg):
     parts = re.split(r"[\s,]+", msg)
     return_var = 0
+
+    #Replace Constants
+    for i, part in enumerate(parts):
+        if part.lower() == "tau":
+            parts[i] = math.tau
+        elif part.lower() == "pi":
+            parts[i] = math.pi
+        elif part.lower() == "e":
+            parts[i] = math.e
+
 
     #Try-Catch for Syntax Errors
     try:
@@ -155,7 +176,8 @@ async def on_message(message):
     #Help Command
     if message.content.startswith("#help"):
         help_message = "Arithmetic Commands (#<command> <num1> <num2>): #add, #sub, #mul, #div, #mod, #pow, #sqrt, #nthrt\n"
-        help_message += "Trigonometric Commands (#<command> <num1>): #sin, #cos, #tan, #cot, #sec, #csc, #asin, #acos, #atan, #acot, #asec, #acsc"
+        help_message += "Trigonometric Commands (#<command> <num1>): #sin, #cos, #tan, #cot, #sec, #csc, #asin, #acos, #atan, #acot, #asec, #acsc\n"
+        help_message += "Constants: tau, pi, e"
         await message.channel.send(help_message)
     
     
