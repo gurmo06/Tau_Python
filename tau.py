@@ -25,6 +25,7 @@ class Arith_Type(enum.Enum):
     DIV = 4
     MOD = 5
     POW = 6
+    SQRT = 7
 
 
 class Trig_Type(enum.Enum):
@@ -67,9 +68,12 @@ def exec_arith(arith_type, msg):
 
         if (arith_type == Arith_Type.POW):
             return_var = arithmetic.pow(float(parts[1]), float(parts[2]))
+            
+        if (arith_type == Arith_Type.SQRT):
+            return_var = arithmetic.sqrt(float(parts[1]))
 
     except ValueError:
-        return "Syntax Error: Arithmetic commands must be in the form of #<command> <num1> <num2>"
+        return "Syntax Error: Arithmetic commands must be in the form of #<command> <num1> <num2> (or #<command> <num1> for sqrt)"
     
     except ZeroDivisionError:
         return "Arithmetic Error: Division by Zero"
@@ -169,6 +173,9 @@ async def on_message(message):
     
     elif message.content.startswith("#pow"):
         await message.channel.send(exec_arith(Arith_Type.POW, message.content))
+        
+    elif message.content.startswith("#sqrt"):
+        await message.channel.send(exec_arith(Arith_Type.SQRT, message.content))
     
     
     #Handle Trigonometric Commands

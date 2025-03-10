@@ -21,3 +21,7 @@ def mod(a, b):
 def pow(a, b):
     val = a ** b
     return str(a) + "^" + str(b) + " = " + str(val)
+
+def sqrt(a):
+    val = a ** 0.5
+    return "sqrt(" + str(a) + ") = " + str(val)
