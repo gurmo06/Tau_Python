@@ -26,6 +26,7 @@ class Arith_Type(enum.Enum):
     MOD = 5
     POW = 6
     SQRT = 7
+    NTH_RT = 8
 
 
 class Trig_Type(enum.Enum):
@@ -68,12 +69,15 @@ def exec_arith(arith_type, msg):
 
         if (arith_type == Arith_Type.POW):
             return_var = arithmetic.pow(float(parts[1]), float(parts[2]))
-            
+        
         if (arith_type == Arith_Type.SQRT):
             return_var = arithmetic.sqrt(float(parts[1]))
+        
+        if (arith_type == Arith_Type.NTH_RT):
+            return_var = arithmetic.nth_root(float(parts[1]), float(parts[2]))
 
     except ValueError:
-        return "Syntax Error: Arithmetic commands must be in the form of #<command> <num1> <num2> (or #<command> <num1> for sqrt)"
+        return "Syntax Error: Arithmetic commands must be in the form of #<command> <num1> <num2> (#<command> <num1> for sqrt)"
     
     except ZeroDivisionError:
         return "Arithmetic Error: Division by Zero"
@@ -150,7 +154,7 @@ async def on_message(message):
 
     #Help Command
     if message.content.startswith("#help"):
-        help_message = "Arithmetic Commands (#<command> <num1> <num2>): #add, #sub, #mul, #div, #mod, #pow\n"
+        help_message = "Arithmetic Commands (#<command> <num1> <num2>): #add, #sub, #mul, #div, #mod, #pow, #sqrt, #nthrt\n"
         help_message += "Trigonometric Commands (#<command> <num1>): #sin, #cos, #tan, #cot, #sec, #csc, #asin, #acos, #atan, #acot, #asec, #acsc"
         await message.channel.send(help_message)
     
@@ -173,9 +177,12 @@ async def on_message(message):
     
     elif message.content.startswith("#pow"):
         await message.channel.send(exec_arith(Arith_Type.POW, message.content))
-        
+    
     elif message.content.startswith("#sqrt"):
         await message.channel.send(exec_arith(Arith_Type.SQRT, message.content))
+    
+    elif message.content.startswith("#nthrt"):
+        await message.channel.send(exec_arith(Arith_Type.NTH_RT, message.content))
     
     
     #Handle Trigonometric Commands

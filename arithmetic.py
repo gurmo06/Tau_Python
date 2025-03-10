@@ -25,3 +25,7 @@ def pow(a, b):
 def sqrt(a):
     val = a ** 0.5
     return "sqrt(" + str(a) + ") = " + str(val)
+
+def nth_root(a, n):
+    val = a ** (1/n)
+    return str(n) + "th root of " + str(a) + " = " + str(val)
